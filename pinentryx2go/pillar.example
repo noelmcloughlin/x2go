@@ -1,0 +1,54 @@
+##### See also map.example #####
+
+  # These are usually set by grains in map.jinja
+
+pinentryx2go:
+  projectname: x2go
+  build_from_source: False
+  install_from_ppa: True
+  install_from_repo: False
+
+  # These are usually set by grains in map.jinja
+  lookup:
+    bin_dir: /usr/bin
+    # This is required for RedHat like distros (Amazon Linux) that don't follow semantic versioning for $releasever
+    rh_os_releasever: 6
+    # Currently it can be used on rhel/centos/suse when installing from repo
+    gpg_check: False
+
+  package:
+    packagename: pinentryx2go
+    opts: {} # this partially exposes parameters of pkg.installed
+    # Set to 'stable' or 'nightly' for each build accordingly ( https://launchpad.net/~pinentryx2go )
+    ppa_version: stable
+    ppa_stable: http://ppa.launchpad.net/x2go/stable/ubuntu
+    ppa_unstable: http://ppa.launchpad.net/x2go/ppa/ubuntu
+    ppa_keyid: 0A53F9FD
+
+  client:
+    clientname: pinentryx2go
+    enable: True # Whether or not the client will be enabled/running or dead
+    user: pinentryx2go
+    home: /var/spool/pinentryx2go
+    printuser: x2goprint
+    binary: x2gocleansessions
+    conf_dir: /etc/x2go
+    conf_file: pinentryx2go.conf
+    pid_file: /run/pinentryx2go.pid
+    opts: {} # this partially exposes parameters of client.running / client.dead
+
+  # Source install
+  source:
+    opts: {}
+    version: 4.0.1.20
+    archive_type: tar.gz
+    source_url: https://code.x2go.org/releases/source/pinentryx2go/pinentryx2go-4.0.1.20.tar.gz
+    source_urlhash: https://code.x2go.org/releases/source/pinentryx2go/pinentryx2go-4.0.1.20.tar.gz.sha256
+    source_root: /usr/local/src/pinentryx2go-4.0.1.20
+    silence_compiler: True
+    build_deps: build-essential
+    configure_make: make -j2
+    make_install: make install
+    bin_dir: /usr/local/bin
+    },
+

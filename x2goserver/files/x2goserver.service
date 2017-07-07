@@ -1,0 +1,27 @@
+{% from 'x2go/x2goserver/map.jinja' import x2goserver, sls_block with context %}
+
+[Unit]
+Description=The x2go remote access server
+After=syslog.target network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=forking
+PIDFile={{ x2goserver.service.pid_file }}
+
+{% if x2goserver.build_from_source %}
+ExecStartPre={{ x2goserver.source.sbin_dir }}/{{ x2goserver.service.binary }}
+ExecStart={{ x2goserver.source.sbin_dir }}/{{ x2goserver.service.binary }}
+ExecReload={{ x2goserver.source.sbin_dir }}/{{ x2goserver.service.binary }} -s reload
+  {% else %}
+ExecStartPre={{ x2goserver.lookup.sbin_dir }}/{{ x2goserver.service.binary }}
+ExecStart={{ x2goserver.lookup.sbin_dir }}/{{ x2goserver.service.binary }}
+ExecReload={{ x2goserver.lookup.sbin_dir }}/{{ x2goserver.service.binary }} -s reload
+{% endif %}
+
+ExecStop=/bin/kill -s QUIT $MAINPID
+Restart=on-failure
+RestartSec=10s
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

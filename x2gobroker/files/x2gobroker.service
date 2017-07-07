@@ -1,0 +1,27 @@
+{% from 'x2go/x2gobroker/map.jinja' import x2gobroker, sls_block with context %}
+
+[Unit]
+Description=The x2go remote access server
+After=syslog.target network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=forking
+PIDFile={{ x2gobroker.service.pid_file }}
+
+{% if x2gobroker.build_from_source %}
+ExecStartPre={{ x2gobroker.source.sbin_dir }}/{{ x2gobroker.service.binary }}
+ExecStart={{ x2gobroker.source.sbin_dir }}/{{ x2gobroker.service.binary }}
+ExecReload={{ x2gobroker.source.sbin_dir }}/{{ x2gobroker.service.binary }} -s reload
+  {% else %}
+ExecStartPre={{ x2gobroker.lookup.sbin_dir }}/{{ x2gobroker.service.binary }}
+ExecStart={{ x2gobroker.lookup.sbin_dir }}/{{ x2gobroker.service.binary }}
+ExecReload={{ x2gobroker.lookup.sbin_dir }}/{{ x2gobroker.service.binary }} -s reload
+{% endif %}
+
+ExecStop=/bin/kill -s QUIT $MAINPID
+Restart=on-failure
+RestartSec=10s
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

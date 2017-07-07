@@ -1,0 +1,76 @@
+{% macro sls_block(dict) %}
+    {% for key, value in dict.items() %}
+    - {{ key }}: {{ value|json() }}
+    {% endfor %}
+{% endmacro %}
+
+{% set x2goserver = salt['pillar.get']('x2go:x2goserver', {
+    'lookup': salt['grains.filter_by']({
+    'default':{
+        'sbin_dir': '/usr/sbin',
+        'gpg_check': False,
+        'build_deps': '',
+        'runtime_deps': '',
+        },
+        'Debian': {
+        'build_deps': ' qt4-designer qtcreator qt4-dev-tools libqt4-dev qt-sdk libssh-dev libldap2-dev libxpm-dev libcups2-dev debhelper doxygen man2html-base xutils-dev libpixman-1-dev devscripts quilt libxcomposite-dev libxrandr-dev libxtst-dev libxinerama-dev libxrender-dev pkg-config expat libxmltok1-dev libxml2-dev libxfont-dev ',
+        'runtime_deps': ' libcapture-tiny-perl libconfig-simple-perl makepasswd libdbd-pg-perl libdbd-sqlite3-perl xauth lsof ',
+        },
+        'CentOS': {
+            'rh_os_releasever': '$releasever',
+        },
+        'RedHat': {
+            'rh_os_releasever': '$releasever',
+            'build_deps': '',
+            'runtime_deps': '',
+        },
+        'Suse': {
+            'gpg_check': True,
+            'gpg_key': 'http://download.opensuse.org/repositories/server:/http/openSUSE_13.2/repodata/repomd.xml.key'
+        },
+        'Arch': {
+        },
+        'Gentoo': {
+        },
+    }, default='Debian' ),
+    'projectname' : 'x2go',
+    'build_from_source': True,
+    'install_from_ppa': False,
+    'install_from_repo': False,
+    'source': {
+        'version': '4.0.1.20',
+        'archive_type': 'tar.gz',
+        'source_url': 'https://code.x2go.org/releases/source/x2goserver/x2goserver-4.0.1.20.tar.gz',
+        'source_urlhash': 'https://code.x2go.org/releases/source/x2goserver/x2goserver-4.0.1.20.tar.gz.sha256',
+        'source_root': '/usr/local/src/x2goserver-4.0.1.20',
+        'silence_compiler': True,
+        'configure_make': 'make -j2',
+        'make_install': 'make install',
+        'sbin_dir' : '/usr/local/sbin',
+    },
+    'package': {
+        'packagename': 'x2goserver',
+        'ppa_version': 'stable',
+        'ppa_stable': 'http://ppa.launchpad.net/x2go/stable/ubuntu',
+        'ppa_unstable': 'http://ppa.launchpad.net/x2go/ppa/ubuntu',
+        'ppa_keyid': '0A53F9FD',
+        'opts': {},
+    },
+    'server': {
+        'opts': {},
+        'config': {
+        },
+    },
+    'service': {
+        'servicename': 'x2goserver',
+        'enable': True,
+        'user': 'x2gouser',
+        'printuser': 'x2goprint',
+        'binary': 'x2gocleansessions',
+        'pid_file': '/run/x2goserver.pid',
+        'home': '/var/spool/x2goserver',
+        'conf_dir': '/etc/x2go/',
+        'conf_file': 'x2goserver.conf',
+        'opts': {},
+    },
+}, merge=True) %}

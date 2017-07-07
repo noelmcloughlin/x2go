@@ -1,0 +1,57 @@
+##### See also map.example #####
+
+  # These are usually set by grains in map.jinja
+
+x2gobroker:
+  projectname: x2go
+  build_from_source: False
+  install_from_ppa: True
+  install_from_repo: False
+
+  # These are usually set by grains in map.jinja
+  lookup:
+    sbin_dir: /usr/sbin
+    # This is required for RedHat like distros (Amazon Linux) that don't follow semantic versioning for $releasever
+    rh_os_releasever: 6
+    # Currently it can be used on rhel/centos/suse when installing from repo
+    gpg_check: False
+
+  package:
+    packagename: x2gobroker
+    opts: {} # this partially exposes parameters of pkg.installed
+    # Set to 'stable' or 'nightly' for each build accordingly ( https://launchpad.net/~x2gobroker )
+    ppa_version: stable
+    ppa_stable: http://ppa.launchpad.net/x2go/stable/ubuntu
+    ppa_unstable: http://ppa.launchpad.net/x2go/ppa/ubuntu
+    ppa_keyid: 0A53F9FD
+
+  service:
+    servicename: x2gobroker
+    enable: True # Whether or not the service will be enabled/running or dead
+    user: x2gobroker
+    home: /var/spool/x2gobroker
+    printuser: x2goprint
+    binary: x2gocleansessions
+    conf_dir: /etc/x2go
+    conf_file: x2gobroker.conf
+    pid_file: /run/x2gobroker.pid
+    opts: {} # this partially exposes parameters of service.running / service.dead
+
+  server:
+    opts: {}
+
+  # Source install
+  source:
+    opts: {}
+    version: 4.0.1.20
+    archive_type: tar.gz
+    source_url: https://code.x2go.org/releases/source/x2gobroker/x2gobroker-4.0.1.20.tar.gz
+    source_urlhash: https://code.x2go.org/releases/source/x2gobroker/x2gobroker-4.0.1.20.tar.gz.sha256
+    source_root: /usr/local/src/x2gobroker-4.0.1.20
+    silence_compiler: True
+    build_deps: build-essential
+    configure_make: make -j2
+    make_install: make install
+    sbin_dir: /usr/local/sbin
+    },
+

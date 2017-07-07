@@ -1,0 +1,8 @@
+name: x2go
+os: RedHat, Debian, Ubuntu, Suse, Gentoo
+os_family: RedHat, Debian, Suse, Gentoo
+version: 201706
+release: 1
+minimum_version: 2017.6
+summary: Formula for installing X2go components
+description: Formula for installing X2go components

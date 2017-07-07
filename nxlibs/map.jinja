@@ -1,0 +1,72 @@
+{% macro sls_block(dict) %}
+    {% for key, value in dict.items() %}
+    - {{ key }}: {{ value|json() }}
+    {% endfor %}
+{% endmacro %}
+
+{% set nxlibs = salt['pillar.get']('x2go:nxlibs', {
+    'lookup': salt['grains.filter_by']({
+    'default':{
+        'bin_dir': '/usr/bin',
+        'gpg_check': False,
+        'build_deps': '',
+        'runtime_deps': '',
+        },
+        'Debian': {
+        'build_deps': 'build-essential',
+        },
+        'CentOS': {
+            'rh_os_releasever': '$releasever',
+        },
+        'RedHat': {
+            'rh_os_releasever': '$releasever',
+            'build_deps': '',
+            'runtime_deps': '',
+        },
+        'Suse': {
+            'gpg_check': True,
+            'gpg_key': 'http://download.opensuse.org/repositories/client:/http/openSUSE_13.2/repodata/repomd.xml.key'
+        },
+        'Arch': {
+        },
+        'Gentoo': {
+        },
+    }, default='Debian' ),
+    'projectname' : 'x2go',
+    'build_from_source': True,
+    'install_from_ppa': False,
+    'install_from_repo': False,
+    'source': {
+        'version': '3.5.0.32',
+        'archive_type': 'tar.gz',
+        'source_url': 'https://code.x2go.org/releases/source/nx-libs/nx-libs-3.5.0.32-full.tar.gz',
+        'source_urlhash': 'https://code.x2go.org/releases/source/nx-libs/nx-libs-3.5.0.32-full.tar.gz.sha256',
+        'source_root': '/usr/local/src/nxlibs-3.5.0.32',
+        'silence_compiler': True,
+        'configure_make': 'make -j2',
+        'make_install': 'make install',
+        'bin_dir' : '/usr/local/bin',
+    },
+    'package': {
+        'packagename': 'nxlibs',
+        'ppa_version': 'stable',
+        'ppa_stable': 'http://ppa.launchpad.net/x2go/stable/ubuntu',
+        'ppa_unstable': 'http://ppa.launchpad.net/x2go/ppa/ubuntu',
+        'ppa_keyid': '0A53F9FD',
+        'opts': {},
+    },
+    'client': {
+        'clientname': 'nxlibs',
+        'enable': True,
+        'user': 'x2gouser',
+        'printuser': 'x2goprint',
+        'binary': 'x2gocleansessions',
+        'pid_file': '/run/nxlibs.pid',
+        'home': '/var/spool/nxlibs',
+        'conf_dir': '/etc/x2go/',
+        'conf_file': 'nxlibs.conf',
+        'opts': {},
+        'config': {
+        },
+    },
+}, merge=True) %}
