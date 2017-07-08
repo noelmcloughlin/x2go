@@ -1,5 +1,4 @@
-#### You can combine grains & pillar lookups for greater flexibility.  ####
-#### See also pillar.example ####
+#### Alternative interface combining grain with pillar lookups ####
 
 {% from "nxlibs/map.jinja" import nxlibs as grain_get with context %}
 {% set p  = salt['pillar.get']('nxlibs', {}) %}
