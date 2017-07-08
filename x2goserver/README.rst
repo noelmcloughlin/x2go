@@ -15,7 +15,7 @@ Install x2goserver either by source or by package.
 ``x2g.x2goserver``
 ------------
 
-Meta-state for inclusion of all ng states.
+Meta-state for inclusion of all states.
 
 **Note:** x2g.x2goserver requires the merge parameter of salt.modules.pillar.get(),
 first available in the Helium release.
