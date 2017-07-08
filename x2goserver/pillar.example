@@ -1,5 +1,3 @@
-##### See also map.example #####
-
   # These are usually set by grains in map.jinja
 
 x2goserver:
