@@ -13,7 +13,14 @@
         'runtime_deps': '',
         },
         'Debian': {
-        'build_deps': ' qt4-designer qtcreator qt4-dev-tools libqt4-dev qt-sdk libssh-dev libldap2-dev libxpm-dev libcups2-dev debhelper doxygen man2html-base xutils-dev libpixman-1-dev devscripts quilt libxcomposite-dev libxrandr-dev libxtst-dev libxinerama-dev libxrender-dev pkg-config expat libxmltok1-dev libxml2-dev libxfont-dev ',
+            'deb': 'http://packages.x2go.org/debian',
+            'deb_keyid': 'E1F958385BFE2B6E',
+            'deb_keyserver': 'keys.gnupg.net',
+            'ppa': 'http://ppa.launchpad.net/x2go/stable/ubuntu',
+            'ppa_keyid': 'E1F958385BFE2B6E',
+            'ppa_keyserver': 'keyserver.ubuntu.com',
+            'ppa_version': stable,
+            'build_deps': ' qt4-designer qtcreator qt4-dev-tools libqt4-dev qt-sdk libssh-dev libldap2-dev libxpm-dev libcups2-dev debhelper doxygen man2html-base xutils-dev libpixman-1-dev devscripts quilt libxcomposite-dev libxrandr-dev libxtst-dev libxinerama-dev libxrender-dev pkg-config expat libxmltok1-dev libxml2-dev libxfont-dev ',
         'runtime_deps': ' libcapture-tiny-perl libconfig-simple-perl makepasswd libdbd-pg-perl libdbd-sqlite3-perl xauth lsof ',
         },
         'CentOS': {
@@ -49,11 +56,6 @@
         'sbin_dir' : '/usr/local/sbin',
     },
     'package': {
-        'packagename': 'x2goserver',
-        'ppa_version': 'stable',
-        'ppa_stable': 'http://ppa.launchpad.net/x2go/stable/ubuntu',
-        'ppa_unstable': 'http://ppa.launchpad.net/x2go/ppa/ubuntu',
-        'ppa_keyid': '0A53F9FD',
         'opts': {},
     },
     'server': {

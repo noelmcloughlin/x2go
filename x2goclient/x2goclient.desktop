@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=X2goclient
+Comment=X2Go Client
+Icon=/opt/x2goclient/icon.png
+Exec=x2goclient
+Terminal=false
+Type=Application
